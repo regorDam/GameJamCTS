@@ -71,7 +71,7 @@ public class AIController : MonoBehaviour
 				m_Character.m_Anim.Play("CharacterDie");
 				//transform.FindChild("Model").GetComponent<SpriteRenderer>().color = Color.red;
 				GetComponent<Rigidbody>().useGravity = false;
-				GetComponent<SphereCollider>().enabled = false;
+				GetComponent<CapsuleCollider>().enabled = false;
 				//animation.wrapMode = WrapMode.Once;
 			}
 			else
