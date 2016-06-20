@@ -9,7 +9,10 @@ public class GameManager : MonoBehaviour
 	public static GameManager Instance 
 	{
 
-		get {return instance; }
+		get 
+		{
+			return instance; 
+		}
 	}
 		
 	void Awake()
