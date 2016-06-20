@@ -46,11 +46,12 @@ public class PlatformerCharacter : MonoBehaviour
 		m_Anim.SetBool ("Ground", m_Grounded);
 
 		m_Anim.SetFloat ("vSpeed", m_Rigidbody.velocity.y);
+
 	}
 
 	public void Move(float move, bool crouch, bool jump)
 	{
-		if (!crouch && m_Anim.GetBool ("Croush")) 
+		if (!crouch && m_Anim.GetBool ("Crouch")) 
 		{
 			if (Physics2D.OverlapCircle (m_CeilingCheck.position, k_CeilingRadius, m_WhatIsGround)) 
 			{
@@ -79,7 +80,6 @@ public class PlatformerCharacter : MonoBehaviour
 		}
 		if (m_Grounded && jump && m_Anim.GetBool ("Ground")) 
 		{
-			Debug.Log ("jump");
 			m_Grounded = false;
 			m_Anim.SetBool ("Ground", false);
 			m_Rigidbody.AddForce (new Vector3 (0f, m_JumpForce, 0));

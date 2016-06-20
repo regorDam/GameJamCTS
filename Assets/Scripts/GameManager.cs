@@ -4,6 +4,7 @@ using System.Collections;
 public class GameManager : MonoBehaviour 
 {
 	private static GameManager instance;
+	private int coins = 0;
 
 	public static GameManager Instance 
 	{
@@ -26,15 +27,9 @@ public class GameManager : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 
-	// Use this for initialization
-	void Start () 
+
+	public void AddCoin()
 	{
-	
-	}
-	
-	// Update is called once per frame
-	void Update () 
-	{
-	
+		coins++;
 	}
 }
