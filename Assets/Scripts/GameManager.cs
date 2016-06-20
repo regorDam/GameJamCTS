@@ -1,10 +1,14 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour 
 {
 	private static GameManager instance;
+	private PlayerController player;
 	private int coins = 0;
+	private float time = 60f;
 
 	public static GameManager Instance 
 	{
@@ -30,9 +34,76 @@ public class GameManager : MonoBehaviour
 		DontDestroyOnLoad(gameObject);
 	}
 
+	public void Restart()
+	{
+		SceneManager.LoadScene (SceneManager.GetActiveScene ().buildIndex);
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+		UIManager.Instance.SetState (GameState.GAME);
+		coins = 0;
+		time = 60f;
+		Debug.Log ("Restart");
+	}
+
+	void Start()
+	{
+		player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
+		UIManager.Instance.SetState (GameState.GAME);
+	}
+
+	void Update()
+	{
+		if (UIManager.Instance.state.Equals (GameState.GAME)) 
+		{
+			//Update Time
+			UIManager.Instance.textTime.text = "TIME : " +             
+				string.Format("{0:#0}:{1:00}.{2:00}",
+					Mathf.Floor((time) / 60),
+					Mathf.Floor((time) % 60),
+					Mathf.Floor((time) * 100 % 100));
+
+			//Update Coins
+			UIManager.Instance.textCount.text = "x " + coins;
+
+			UpdateColorsTime ();
+		}
+
+		if (time <= 0) 
+		{
+			Debug.Log ("timeout");
+			player.isDead = true;
+			//player.m_Character.m_Anim.Play("CharacterDie");
+			Restart ();
+		}
+
+		time -= Time.deltaTime;
+
+
+	}
+
+	private void UpdateColorsTime()
+	{
+		//Update Colors Time
+		if (time > 41)
+			UIManager.Instance.textTime.color = Color.green;
+		else if(time > 21)
+			UIManager.Instance.textTime.color = Color.yellow;
+		else if(time > 11)
+			UIManager.Instance.textTime.color = Color.red;
+	}
+
+	public void TimeHit(float value)
+	{
+		time -= value;
+	}
 
 	public void AddCoin()
 	{
 		coins++;
+	}
+
+	public void AddRole(int type)
+	{
+		player.canFire = true;
+		player.weaponRole = type;
 	}
 }

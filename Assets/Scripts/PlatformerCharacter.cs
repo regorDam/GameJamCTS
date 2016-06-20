@@ -17,7 +17,8 @@ public class PlatformerCharacter : MonoBehaviour
 	[HideInInspector]
 	public Animator m_Anim;
 	private Rigidbody m_Rigidbody;
-	private bool m_FacingRight = true;
+	[HideInInspector]
+	public bool m_FacingRight = true;
 
 
 	void Awake()

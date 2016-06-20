@@ -1,6 +1,5 @@
 ﻿using UnityEngine;
 using System.Collections;
-using UnityEngine.SceneManagement;
 
 
 [RequireComponent(typeof(PlatformerCharacter))]
@@ -15,6 +14,10 @@ public class PlayerController : MonoBehaviour
 
 	private Transform weapon;
 
+	[HideInInspector][Range(0,1)]
+	public int weaponRole;
+	public bool canFire { get; set; }
+
 	void Awake()
 	{
 		m_Character = GetComponent<PlatformerCharacter> ();
@@ -23,6 +26,9 @@ public class PlayerController : MonoBehaviour
 
 	void Start () 
 	{
+		weaponRole = 0;
+		isDead = false;
+		canFire = false;
 		gameManager = GameManager.Instance;
 	}
 	
@@ -37,14 +43,22 @@ public class PlayerController : MonoBehaviour
 
 		if(isDead)
 		{
+			Debug.Log ("Player is dead");
 			time -= Time.deltaTime;
-			if(time < 0)
-				SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+			if (time < 0) 
+			{
+				isDead = true;
+				m_Character.m_Anim.Play("CharacterDie");
+				GameManager.Instance.Restart ();
+			}
 		}
 
-		if (Input.GetMouseButtonDown (0)) {
-			GameObject bullet = Instantiate (Resources.Load ("Prefabs/Bullet"), weapon.position, Quaternion.identity) as GameObject;
-			bullet.GetComponent<Rigidbody> ().velocity = bullet.transform.right * bullet.GetComponent<Bullet> ().Speed;
+		if (Input.GetMouseButtonDown (0) && canFire) {
+			GameObject bullet = Instantiate (Resources.Load ("Prefabs/Bullet"+weaponRole), weapon.position, Quaternion.identity) as GameObject;
+			float speed = bullet.GetComponent<Bullet> ().Speed;
+			if (!m_Character.m_FacingRight)
+				speed *= -1;
+			bullet.GetComponent<Rigidbody> ().velocity = (weapon.right) * speed;
 			m_Character.m_Anim.SetBool ("Shoot", true);
 		} else 
 		{

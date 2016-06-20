@@ -67,6 +67,7 @@ public class AIController : MonoBehaviour
 		{
 			if (m_CeilingCheck.position.y <= collision.gameObject.transform.position.y && !isDead)
 			{
+				Debug.Log ("enemy Dead");
 				isDead = true;
 				m_Character.m_Anim.Play("CharacterDie");
 				//transform.FindChild("Model").GetComponent<SpriteRenderer>().color = Color.red;
@@ -77,11 +78,15 @@ public class AIController : MonoBehaviour
 			else
 			{
 				//HIT
+
+				/*
 				collision.gameObject.GetComponent<PlayerController>().isDead = true;
 				collision.gameObject.GetComponent<PlayerController>().m_Character.m_Anim.Play("CharacterDie");
 				//collision.gameObject.transform.FindChild("Model").GetComponent<SpriteRenderer>().color = Color.red;
 				collision.gameObject.GetComponent<Rigidbody>().useGravity = false;
-				collision.gameObject.GetComponent<SphereCollider>().enabled = false;
+				collision.gameObject.GetComponent<CapsuleCollider>().enabled = false;
+				*/
+				gameManager.TimeHit (5f);
 			}
 
 		}
