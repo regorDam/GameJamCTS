@@ -28,7 +28,8 @@ public class PlayerController : MonoBehaviour
 	{
 		if (!m_Jump)
 		{
-			m_Jump = Input.GetButtonDown("Jump");
+			//m_Jump = Input.GetButtonDown("Jump");
+			m_Jump = Input.GetKeyDown(KeyCode.Space);
 		}
 
 		if(isDead)
