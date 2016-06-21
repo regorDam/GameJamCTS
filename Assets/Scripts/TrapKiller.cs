@@ -5,13 +5,15 @@ public class TrapKiller : MonoBehaviour {
 
 	[SerializeField]
 	private GameObject player;
+    [SerializeField]
+    private float timeSustract = 15;
 
 	void Awake(){
 		player = GameObject.FindWithTag ("Player");
 	}
 	void OnTriggerEnter(Collider col){
 		if (col.gameObject.tag == "Player") {
-			player.GetComponent<PlayerController> ().isDead = true;
+            GameManager.Instance.TimeHit(timeSustract);
 		}
 	}
 

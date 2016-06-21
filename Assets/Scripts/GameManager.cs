@@ -46,7 +46,7 @@ public class GameManager : MonoBehaviour
         UIManager.Instance.SetState(GameState.GAME);
         coins = 0;
         time = 60f;
-        Debug.Log("Restart");
+        //Debug.Log("Restart");
     }
 
     void Start()
@@ -74,9 +74,12 @@ public class GameManager : MonoBehaviour
 
         if (time <= 0)
         {
-            Debug.Log("timeout");
-            player.isDead = true;
-            //player.m_Character.m_Anim.Play("CharacterDie");
+            //Debug.Log("timeout");
+            if (player)
+            {
+                player.isDead = true;
+                player.m_Character.m_Anim.Play("CharacterDie");
+            }
             Restart();
         }
 

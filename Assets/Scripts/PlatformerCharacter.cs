@@ -40,8 +40,11 @@ public class PlatformerCharacter : MonoBehaviour
 
 		for (int i = 0; i < colliders.Length; i++) 
 		{
-			if (colliders [i].gameObject != gameObject)
-				m_Grounded = true;
+            if (colliders[i].gameObject != gameObject)
+            {
+                m_Grounded = true;
+                
+            }
 		}
 
 		m_Anim.SetBool ("Ground", m_Grounded);
@@ -79,14 +82,32 @@ public class PlatformerCharacter : MonoBehaviour
 				Flip ();
 			}
 		}
-		if (m_Grounded && jump && m_Anim.GetBool ("Ground")) 
-		{
-			m_Grounded = false;
-			m_Anim.SetBool ("Ground", false);
-			m_Rigidbody.AddForce (new Vector3 (0f, m_JumpForce, 0));
-		}
+        if (jump)
+        {
+            m_Anim.SetBool("Jump", true);
+        }
+        if (m_Grounded && jump && m_Anim.GetBool("Ground"))
+        {
+            //m_Anim.SetBool("Jump", false);
+        }
+//		if (m_Grounded && jump && m_Anim.GetBool ("Ground")) 
+//		{
+//			m_Grounded = false;
+//			m_Anim.SetBool ("Ground", false);
+//			m_Rigidbody.AddForce (new Vector3 (0f, m_JumpForce, 0));
+//		}
 	}
-
+    public void Jump()
+    {
+        m_Anim.SetBool ("Ground", false);
+        m_Rigidbody.AddForce (new Vector3 (0f, m_JumpForce, 0));
+        m_Grounded = false;
+    }
+    public void Landing()
+    {
+        //m_Anim.SetBool("Ground", true);
+        m_Anim.SetBool("Jump", false);
+    }
 	void Flip()
 	{
 		m_FacingRight = !m_FacingRight;

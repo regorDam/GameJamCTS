@@ -45,7 +45,7 @@ public class UIManager : MonoBehaviour
 
     void OnGUI()
     {
-        Debug.Log(state);
+
         DissableUI();
         switch (state)
         {

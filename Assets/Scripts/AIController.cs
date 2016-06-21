@@ -67,7 +67,7 @@ public class AIController : MonoBehaviour
 		{
 			if (m_CeilingCheck.position.y <= collision.gameObject.transform.position.y && !isDead)
 			{
-				Debug.Log ("enemy Dead");
+				//Debug.Log ("enemy Dead");
 				isDead = true;
 				m_Character.m_Anim.Play("CharacterDie");
 				//transform.FindChild("Model").GetComponent<SpriteRenderer>().color = Color.red;
