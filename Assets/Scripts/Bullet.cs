@@ -20,7 +20,8 @@ public class Bullet : MonoBehaviour
 			//Player hit
 		} else if (other.transform.tag.Equals ("Enemy")) 
 		{
-			Destroy (other.gameObject);
+			other.gameObject.GetComponent<AIController>().isDead = true;
+			//Destroy (other.gameObject, 4f);
 			//init powerUP
 			Destroy (gameObject);
 			//Instantiate(Resources.Load("Prefabs/ "), other.transform.position, Quaternion.identity);

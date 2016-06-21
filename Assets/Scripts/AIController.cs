@@ -44,8 +44,11 @@ public class AIController : MonoBehaviour
 		else
 			dir = 1f;
 
-		if (isDead)
+		if (isDead) 
+		{
 			dir = 0f;
+			Dead ();
+		}
 
 	}
 
@@ -68,11 +71,7 @@ public class AIController : MonoBehaviour
 			if (m_CeilingCheck.position.y <= collision.gameObject.transform.position.y && !isDead)
 			{
 				//Debug.Log ("enemy Dead");
-				isDead = true;
-				m_Character.m_Anim.Play("CharacterDie");
-				//transform.FindChild("Model").GetComponent<SpriteRenderer>().color = Color.red;
-				GetComponent<Rigidbody>().useGravity = false;
-				GetComponent<CapsuleCollider>().enabled = false;
+				Dead();
 				//animation.wrapMode = WrapMode.Once;
 			}
 			else
@@ -93,5 +92,14 @@ public class AIController : MonoBehaviour
         if (collision.gameObject.layer == 8) return;
         if (collision.gameObject.layer == 9) return;
 		right = !right;
+	}
+
+	void Dead()
+	{
+		isDead = true;
+		m_Character.m_Anim.Play("CharacterDie");
+		//transform.FindChild("Model").GetComponent<SpriteRenderer>().color = Color.red;
+		GetComponent<Rigidbody>().useGravity = false;
+		GetComponent<CapsuleCollider>().enabled = false;
 	}
 }

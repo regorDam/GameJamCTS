@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
 	private bool m_Jump;
 	public bool isDead { get; set; }
 	private float time = 2;
+	private float timedead = 4;
 
 	private Transform weaponSpawn;
 
@@ -44,14 +45,19 @@ public class PlayerController : MonoBehaviour
 
 		if(isDead)
 		{
-			Debug.Log ("Player is dead");
-			time -= Time.deltaTime;
-			if (time < 0) 
+			//Debug.Log ("Player is dead");
+			m_Character.m_Anim.Play("CharacterDie");
+			GetComponent<CapsuleCollider> ().enabled = false;
+			GetComponent<Rigidbody> ().useGravity = false;
+			GetComponent<Rigidbody> ().velocity = Vector3.zero;
+			timedead -= Time.deltaTime;
+			if (timedead < 0) 
 			{
-				isDead = true;
-				m_Character.m_Anim.Play("CharacterDie");
+				//isDead = true;
+				timedead = 4;
 				GameManager.Instance.Restart ();
 			}
+			return;
 		}
 
 		if (Input.GetMouseButtonDown (0) && canFire) {

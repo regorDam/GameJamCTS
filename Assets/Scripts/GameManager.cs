@@ -82,7 +82,7 @@ public class GameManager : MonoBehaviour
                 player.isDead = true;
                 player.m_Character.m_Anim.Play("CharacterDie");
             }
-            Restart();
+            //Restart();
         }
 
         time -= Time.deltaTime;

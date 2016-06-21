@@ -8,7 +8,7 @@ public class Goal : MonoBehaviour
 	{
 		if (other.tag == "Player")
 		{
-			Camera.main.fieldOfView = 80;
+			Camera.main.fieldOfView = 100;
 		}
 	}
 }

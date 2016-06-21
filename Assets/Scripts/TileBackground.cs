@@ -18,8 +18,6 @@ public class TileBackground : MonoBehaviour
     {
         fColor += 0.01f * Time.deltaTime ;
 
-        Vector2 calc = Vector2.zero;
-
         if (fNumber <= 0.3)
             op = true;
         if (fNumber >= 0.85)
