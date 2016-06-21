@@ -90,6 +90,8 @@ public class AIController : MonoBehaviour
 			}
 
 		}
+        if (collision.gameObject.layer == 8) return;
+        if (collision.gameObject.layer == 9) return;
 		right = !right;
 	}
 }

@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour
         //Sets this to not be destroyed when reloading scene
         DontDestroyOnLoad(gameObject);
 
-        uiManager = GameObject.Find("UI").GetComponent<UIManager>();
+        uiManager = UIManager.Instance;//GameObject.Find("UI").GetComponent<UIManager>();
         uiManager.SetState(GameState.GAME);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
@@ -116,6 +116,18 @@ public class GameManager : MonoBehaviour
         if (!player) Debug.Log("null");
         player.canFire = true;
         player.weaponModel.SetActive(true);
+        if (type == 0)
+        {
+            player.weaponModel.transform.Find("pinzell").gameObject.SetActive(false);
+            player.weaponModel.transform.Find("teclado").gameObject.SetActive(true);
+
+        }
+        else
+        {
+            player.weaponModel.transform.Find("pinzell").gameObject.SetActive(true);
+            player.weaponModel.transform.Find("teclado").gameObject.SetActive(false);
+        }
         player.weaponRole = type;
+
     }
 }
