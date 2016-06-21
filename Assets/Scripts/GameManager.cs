@@ -62,7 +62,7 @@ public class GameManager : MonoBehaviour
         {
             if (!player) player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             //Update Time
-            UIManager.Instance.textTime.text = "TIME : " +
+            UIManager.Instance.textTime.text = "  <color=green>TIME : </color> " +
                 string.Format("{0:#0}:{1:00}.{2:00}",
                     Mathf.Floor((time) / 60),
                     Mathf.Floor((time) % 60),

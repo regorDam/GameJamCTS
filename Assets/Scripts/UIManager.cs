@@ -32,7 +32,7 @@ public class UIManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
         instance = this;
 
-        textTime = UIManager.Instance.gamePanel.FindChild("Text").GetComponent<Text>();
+        textTime = UIManager.Instance.gamePanel.FindChild("PanelTime/Text").GetComponent<Text>();
         textCount = UIManager.Instance.gamePanel.FindChild("Count").GetComponent<Text>();
     }
 
