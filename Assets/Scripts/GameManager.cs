@@ -33,7 +33,7 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
 
         //Sets this to not be destroyed when reloading scene
-        DontDestroyOnLoad(gameObject);
+        //DontDestroyOnLoad(gameObject);
 
         uiManager = UIManager.Instance;//GameObject.Find("UI").GetComponent<UIManager>();
         uiManager.SetState(GameState.GAME);
@@ -62,14 +62,14 @@ public class GameManager : MonoBehaviour
         {
             if (!player) player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             //Update Time
-            UIManager.Instance.textTime.text = "  <color=green>TIME : </color> " +
+            UIManager.Instance.textTime.text = "  <color=cyan>TIME : </color> " +
                 string.Format("{0:#0}:{1:00}.{2:00}",
                     Mathf.Floor((time) / 60),
                     Mathf.Floor((time) % 60),
                     Mathf.Floor((time) * 100 % 100));
 
             //Update Coins
-            UIManager.Instance.textCount.text = "x " + coins;
+			UIManager.Instance.textCount.text = + coins +"/"+ (SceneManager.GetActiveScene().buildIndex + 6);
 
             UpdateColorsTime();
         }
@@ -116,18 +116,23 @@ public class GameManager : MonoBehaviour
         if (!player) Debug.Log("null");
         player.canFire = true;
         player.weaponModel.SetActive(true);
+		string path = "";
         if (type == 0)
         {
             player.weaponModel.transform.Find("pinzell").gameObject.SetActive(false);
             player.weaponModel.transform.Find("teclado").gameObject.SetActive(true);
+			path = "HUD/render_teclat";
 
         }
         else
         {
             player.weaponModel.transform.Find("pinzell").gameObject.SetActive(true);
             player.weaponModel.transform.Find("teclado").gameObject.SetActive(false);
+			path = "HUD/render_pincell";
         }
         player.weaponRole = type;
 
+		UIManager.Instance.gamePanel.Find ("Type").GetComponent<Image> ().enabled = true;
+		UIManager.Instance.gamePanel.Find ("Type").GetComponent<Image>().sprite = Resources.Load<Sprite>(path);
     }
 }
