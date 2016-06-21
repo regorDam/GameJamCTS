@@ -5,23 +5,24 @@ using System.Collections;
 [RequireComponent(typeof(PlatformerCharacter))]
 public class PlayerController : MonoBehaviour 
 {
-	private GameManager gameManager;
+	//private GameManager gameManager;
 	[HideInInspector]
 	public PlatformerCharacter m_Character;
 	private bool m_Jump;
 	public bool isDead { get; set; }
 	private float time = 2;
 
-	private Transform weapon;
+	private Transform weaponSpawn;
 
 	[HideInInspector][Range(0,1)]
 	public int weaponRole;
 	public bool canFire { get; set; }
+    public GameObject weaponModel;
 
 	void Awake()
 	{
 		m_Character = GetComponent<PlatformerCharacter> ();
-		weapon = transform.Find ("Weapon");
+		weaponSpawn = transform.Find ("Weapon");
 	}
 
 	void Start () 
@@ -29,7 +30,7 @@ public class PlayerController : MonoBehaviour
 		weaponRole = 0;
 		isDead = false;
 		canFire = false;
-		gameManager = GameManager.Instance;
+		//gameManager = GameManager.Instance;
 	}
 	
 
@@ -54,11 +55,7 @@ public class PlayerController : MonoBehaviour
 		}
 
 		if (Input.GetMouseButtonDown (0) && canFire) {
-			GameObject bullet = Instantiate (Resources.Load ("Prefabs/Bullet"+weaponRole), weapon.position, Quaternion.identity) as GameObject;
-			float speed = bullet.GetComponent<Bullet> ().Speed;
-			if (!m_Character.m_FacingRight)
-				speed *= -1;
-			bullet.GetComponent<Rigidbody> ().velocity = (weapon.right) * speed;
+
 			m_Character.m_Anim.SetBool ("Shoot", true);
 		} else 
 		{
@@ -67,7 +64,14 @@ public class PlayerController : MonoBehaviour
 	
 	}
 
-
+    public void Fire()
+    {
+        GameObject bullet = Instantiate(Resources.Load("Prefabs/Bullet" + weaponRole), weaponSpawn.position, Quaternion.identity) as GameObject;
+        float speed = bullet.GetComponent<Bullet>().Speed;
+        if (!m_Character.m_FacingRight)
+            speed *= -1;
+        bullet.GetComponent<Rigidbody>().velocity = (weaponSpawn.right) * speed;
+    }
 	private void DelayShoot()
 	{
 		time -= Time.deltaTime;

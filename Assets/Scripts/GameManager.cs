@@ -37,11 +37,12 @@ public class GameManager : MonoBehaviour
 
         uiManager = GameObject.Find("UI").GetComponent<UIManager>();
         uiManager.SetState(GameState.GAME);
+        player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
     }
 
     public void Restart()
     {
-        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadSceneAsync(SceneManager.GetActiveScene().buildIndex);
         player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
         UIManager.Instance.SetState(GameState.GAME);
         coins = 0;
@@ -59,6 +60,7 @@ public class GameManager : MonoBehaviour
     {
         if (UIManager.Instance.state.Equals(GameState.GAME))
         {
+            if (!player) player = GameObject.FindGameObjectWithTag("Player").GetComponent<PlayerController>();
             //Update Time
             UIManager.Instance.textTime.text = "TIME : " +
                 string.Format("{0:#0}:{1:00}.{2:00}",
@@ -111,7 +113,9 @@ public class GameManager : MonoBehaviour
 
     public void AddRole(int type)
     {
+        if (!player) Debug.Log("null");
         player.canFire = true;
+        player.weaponModel.SetActive(true);
         player.weaponRole = type;
     }
 }
